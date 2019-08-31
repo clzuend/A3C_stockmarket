@@ -6,5 +6,5 @@ The market environment is adapted from [kh-kim](https://github.com/kh-kim/stock_
 #### Usage
 Got to 'Model/A3C/' and open 'Run.ipynb' to start training.
 
-#### Monitor traininga
+#### Monitor training
 Run ```tensorboard --logdir=Model/A3C/Graph/``` to inspect the performance of the model.
