@@ -44,15 +44,15 @@ codeListFilename = '../../ENV/kospi_10.csv'
 codeMap = {}
 f = codecs.open(codeListFilename, "r", "utf-8")
 for line in f:
-  if line.strip() != "":
-    tokens = line.strip().split(",") if not "\t" in line else line.strip().split("\t")
-    codeMap[tokens[0]] = tokens[1]
+    if line.strip() != "":
+        tokens = line.strip().split(",") if not "\t" in line else line.strip().split("\t")
+        codeMap[tokens[0]] = tokens[1]
 f.close()
 
 
 def make_env(wrap=True):
-  env = MarketEnv(dir_path = "../../ENV/sample_data/", target_codes = codeMap.keys(), input_codes = [], start_date = "2010-08-25", end_date = "2015-08-25", sudden_death = -1.0)
-  return env
+    env = MarketEnv(dir_path = "../../ENV/sample_data/", target_codes = codeMap.keys(), input_codes = [], start_date = "2010-08-25", end_date = "2015-08-25", sudden_death = -1.0)
+    return env
 
 # -----
 

@@ -8,3 +8,5 @@ Got to Model/A3C/ and open Run.ipynb to start training.
 
 #### Monitor training
 Run ```tensorboard --logdir=Model/A3C/Graph/``` to inspect the performance of the model.
+
+![alt text](Images/tensorboard.png "Tensorboard")
