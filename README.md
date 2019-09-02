@@ -3,7 +3,7 @@ This is a toy project to implement A3C reinforcement learning in a stock market 
 
 The market environment is adapted from [kh-kim](https://github.com/kh-kim/stock_market_reinforcement_learning/blob/master/market_env.py), the A3C is based on [Grezgo's async-rl project](https://github.com/Grzego/async-rl/blob/master/a3c/train.py). The network concatenates an LSTM with a state vector for the portfolio.
 
-![alt text](Images/model.png "Model")
+![alt text](Images/model.png =470x509 "Model")
 
 
 #### Usage
