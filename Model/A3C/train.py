@@ -1,6 +1,6 @@
 # Inspired by: https://github.com/Grzego/async-rl/blob/master/a3c/train.py
-from scipy.misc import imresize
-from skimage.color import rgb2gray
+#from scipy.misc import imresize
+#from skimage.color import rgb2gray
 from multiprocessing import *
 from collections import deque
 import gym
@@ -30,6 +30,10 @@ parser.add_argument('--reward_scale', default=1., dest='reward_scale', type=floa
 parser.add_argument('--beta', default=0.01, dest='beta', type=float)
 parser.add_argument('--verbose_learner', default=1, dest='verbose_learner', type=float)
 parser.add_argument('--verbose_worker', default=0, dest='verbose_worker', type=float)
+parser.add_argument('--market_data', default='', dest='market_data', type=str)
+parser.add_argument('--market_data_index', default='', dest='market_data_index', type=str)
+
+
 # -----
 args = parser.parse_args()
 
@@ -39,7 +43,7 @@ args = parser.parse_args()
 sys.path.append("../../ENV")
 from market_env import MarketEnv
 import codecs
-codeListFilename = '../../ENV/kospi_10.csv'
+codeListFilename = args.market_data_index
 
 codeMap = {}
 f = codecs.open(codeListFilename, "r", "utf-8")
@@ -51,7 +55,7 @@ f.close()
 
 
 def make_env(wrap=True):
-    env = MarketEnv(dir_path = "../../ENV/sample_data/", target_codes = codeMap.keys(), input_codes = [], start_date = "2010-08-25", end_date = "2015-08-25", sudden_death = -1.0)
+    env = MarketEnv(dir_path = args.market_data, target_codes = codeMap.keys(), input_codes = [], start_date = "2010-08-25", end_date = "2015-08-25", sudden_death = -1.0)
     return env
 
 # -----
