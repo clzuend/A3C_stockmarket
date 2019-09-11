@@ -7,10 +7,10 @@ from gym import spaces
 
 class MarketEnv(gym.Env):
 
-	PENALTY = 1 #0.999756079
+	PENALTY = 0.999756079
 
 	def __init__(self, dir_path, target_codes, input_codes, 
-                 start_date, end_date, scope = 60, sudden_death = -1., cumulative_reward = False):
+                 start_date, end_date, scope = 6, sudden_death = -1., cumulative_reward = False):
 		self.startDate = start_date
 		self.endDate = end_date
 		self.scope = scope

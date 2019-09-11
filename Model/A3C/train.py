@@ -32,7 +32,7 @@ parser.add_argument('--verbose_learner', default=1, dest='verbose_learner', type
 parser.add_argument('--verbose_worker', default=0, dest='verbose_worker', type=float)
 parser.add_argument('--market_data', default='', dest='market_data', type=str)
 parser.add_argument('--market_data_index', default='', dest='market_data_index', type=str)
-
+parser.add_argument('--outname', default='', dest='outname', type=str)
 
 # -----
 args = parser.parse_args()
@@ -40,22 +40,22 @@ args = parser.parse_args()
 # -----
 
 # Enable Market Env
-sys.path.append("../../ENV")
+sys.path.append('../../ENV')
 from market_env import MarketEnv
 import codecs
 codeListFilename = args.market_data_index
 
 codeMap = {}
-f = codecs.open(codeListFilename, "r", "utf-8")
+f = codecs.open(codeListFilename, 'r', 'utf-8')
 for line in f:
-    if line.strip() != "":
-        tokens = line.strip().split(",") if not "\t" in line else line.strip().split("\t")
+    if line.strip() != '':
+        tokens = line.strip().split(',') if not '\t' in line else line.strip().split('\t')
         codeMap[tokens[0]] = tokens[1]
 f.close()
 
 
 def make_env(wrap=True):
-    env = MarketEnv(dir_path = args.market_data, target_codes = codeMap.keys(), input_codes = [], start_date = "2010-08-25", end_date = "2015-08-25", sudden_death = -1.0)
+    env = MarketEnv(dir_path = args.market_data, target_codes = codeMap.keys(), input_codes = [], start_date = '2010-08-25', end_date = '2015-08-25', sudden_death = -1.0)
     return env
 
 # -----
@@ -121,7 +121,7 @@ def value_loss():
 
 class LearningAgent(object):
     def __init__(self, action_space, batch_size=20, swap_freq=200):
-        from keras.optimizers import RMSprop
+        from keras.optimizers import Adam
         from keras.callbacks import TensorBoard
         import os, datetime
         # -----
@@ -139,8 +139,8 @@ class LearningAgent(object):
         self.batch_size = batch_size
         _, _, self.train_net, advantage = build_network(self.state_size, self.observation_size, action_space.n)
 
-        self.train_net.compile(optimizer=RMSprop(epsilon=0.1, rho=0.99),
-                               loss=[value_loss(), policy_loss(advantage, args.beta)])
+        self.train_net.compile(optimizer=Adam(lr=0.001, beta_1=0.9, beta_2=0.999),
+                                loss=[value_loss(), policy_loss(advantage, args.beta)])
         
         self.pol_loss = deque(maxlen=25)
         self.val_loss = deque(maxlen=25)
@@ -488,7 +488,7 @@ def main():
     pool = Pool(args.processes + 1, init_worker)
 
     var_dict['global_counter'] = 0
-    var_dict['datedir'] = os.path.join(os.getcwd()+'/Graph', datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S'))
+    var_dict['datedir'] = os.path.join(os.getcwd()+'/Graph', args.outname+datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S'))
     
     try:
         pool.apply_async(learn_proc, (mem_queue, weight_dict, var_dict))
