@@ -1,6 +1,4 @@
 # Inspired by: https://github.com/Grzego/async-rl/blob/master/a3c/train.py
-#from scipy.misc import imresize
-#from skimage.color import rgb2gray
 from multiprocessing import *
 from collections import deque
 import gym
@@ -40,7 +38,7 @@ args = parser.parse_args()
 # -----
 
 # Enable Market Env
-sys.path.append('../../ENV')
+sys.path.append('../../ENV/')
 from market_env import MarketEnv
 import codecs
 codeListFilename = args.market_data_index
